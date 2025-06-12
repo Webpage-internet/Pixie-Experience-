@@ -64,6 +64,7 @@
             border-radius: 10px;
             box-shadow: var(--shadow);
             width: 100%;
+            margin-bottom: 20px; /* Added margin for spacing */
         }
         
         .section-title {
@@ -72,8 +73,18 @@
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        
+
+        .section-title i {
+            cursor: pointer;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-left: 10px;
+        }
+
         .option-group {
             margin-bottom: 25px;
         }
@@ -405,6 +416,7 @@
             width: 90%;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative; /* Added for close button positioning */
         }
         
         .modal h2 {
@@ -447,9 +459,18 @@
         }
         
         /* Dimension inputs */
+        .dimension-inputs-wrapper {
+            display: flex;
+            align-items: flex-end; /* Align items at the bottom */
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
         .dimension-inputs {
             display: flex;
             gap: 15px;
+            flex-grow: 1; /* Allows inputs to take available space */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
         }
         
         .dimension-input {
@@ -468,6 +489,58 @@
             border: 1px solid #e2e8f0;
             border-radius: 6px;
             width: 100px;
+        }
+
+        .sqm-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .sqm-input-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #4a5568;
+        }
+        .sqm-input-group input {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            width: 120px; /* Adjust width as needed */
+        }
+
+        .dimensions-image-container {
+            width: 250px; /* Made larger */
+            height: 200px; /* Made larger */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0; /* Prevents image from shrinking */
+        }
+        .dimensions-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Close button for modal */
+        .modal-close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .radio-option .info-icon {
+            font-size: 0.9em;
+            margin-left: 5px;
+            cursor: pointer;
+            color: var(--primary-color);
         }
         
         @media (max-width: 900px) {
@@ -492,9 +565,20 @@
                 gap: 10px;
             }
             
+            .dimension-inputs-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
             .dimension-inputs {
                 flex-direction: column;
                 gap: 10px;
+            }
+            .dimensions-image-container {
+                width: 100%;
+                height: 200px; /* Adjust height for mobile */
+            }
+            .sqm-input-group input {
+                width: 100%; /* Full width on mobile */
             }
         }
     </style>
@@ -515,42 +599,68 @@
                 
                 <div class="option-group">
                     <h3>Stall Dimensions</h3>
-                    <div class="dimension-inputs">
-                        <div class="dimension-input">
-                            <label for="stall-width">Width (ft)</label>
-                            <input type="number" id="stall-width" min="1" value="10" class="form-control">
-                        </div>
-                        <div class="dimension-input">
-                            <label for="stall-height">Depth (ft)</label>
-                            <input type="number" id="stall-height" min="1" value="10" class="form-control">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Facia Type</label>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="facia-normal" name="facia-type" value="normal" checked>
-                                <label for="facia-normal">Normal Facia</label>
+                    <div class="dimension-inputs-wrapper">
+                        <div class="dimension-inputs">
+                            <div class="dimension-input">
+                                <label for="stall-width">Width (ft)</label>
+                                <input type="number" id="stall-width" min="1" value="10" class="form-control">
                             </div>
-                            <div class="radio-option">
-                                <input type="radio" id="facia-designer" name="facia-type" value="designer">
-                                <label for="facia-designer">Designer Facia</label>
+                            <div class="dimension-input">
+                                <label for="stall-depth">Depth (ft)</label>
+                                <input type="number" id="stall-depth" min="1" value="10" class="form-control">
+                            </div>
+                            <div class="dimension-input">
+                                <label for="stall-height">Height (ft)</label>
+                                <input type="number" id="stall-height" min="1" value="8" class="form-control">
+                            </div>
+                            <div class="sqm-input-group">
+                                <label for="stall-sqm-manual">Area (sq ft)</label>
+                                <input type="number" id="stall-sqm-manual" min="1" value="0" class="form-control">
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="budget">Budget Range</label>
-                        <select id="budget" class="form-control">
-                            <option value="low">Low Budget</option>
-                            <option value="mid">Medium Budget</option>
-                            <option value="high" selected>High Budget</option>
-                        </select>
+                        <div class="dimensions-image-container">
+                            <img src="https://i.postimg.cc/KvNrhx8n/stall.png" alt="Stall Dimensions Guide">
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Rest of your form content remains the same -->
+                <div class="option-group">
+                    <h3>Stall Type</h3>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="stall-octonorm" name="stall-type" value="octonorm" checked>
+                            <label for="stall-octonorm">Octonorm Stall <i class="fas fa-info-circle info-icon" data-stall-type="octonorm" title="Click for Octonorm Stall example"></i></label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="stall-customized" name="stall-type" value="customized">
+                            <label for="stall-customized">Customized Stall <i class="fas fa-info-circle info-icon" data-stall-type="customized" title="Click for Customized Stall example"></i></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <h3>Facia Type</h3>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="facia-normal" name="facia-type" value="normal" checked>
+                            <label for="facia-normal">Normal Facia</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="facia-designer" name="facia-type" value="designer">
+                            <label for="facia-designer">Designer Facia</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="budget">Budget Range</label>
+                    <select id="budget" class="form-control">
+                        <option value="low">Low Budget</option>
+                        <option value="mid">Medium Budget</option>
+                        <option value="high" selected>High Budget</option>
+                    </select>
+                </div>
+                
                 <div class="option-group">
                     <h3>TV Displays</h3>
                     <div class="option-item">
@@ -705,6 +815,15 @@
                             <button class="quantity-plus">+</button>
                         </div>
                     </div>
+                     <div class="option-item">
+                        <input type="checkbox" id="option-bar-stool" class="furniture-option" data-type="bar-stool" data-width="30" data-height="30">
+                        <label for="option-bar-stool">Bar Stools</label>
+                        <div class="quantity-control" data-for="option-bar-stool">
+                            <button class="quantity-minus">-</button>
+                            <span>1</span>
+                            <button class="quantity-plus">+</button>
+                        </div>
+                    </div>
                     <div class="option-item">
                         <input type="checkbox" id="option-t-poy" class="furniture-option" data-type="t-poy" data-width="40" data-height="40">
                         <label for="option-t-poy">T-Poy</label>
@@ -773,6 +892,10 @@
                         <input type="checkbox" id="option-meeting">
                         <label for="option-meeting">Meeting Room</label>
                     </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="option-coffee-machine">
+                        <label for="option-coffee-machine">Coffee Machine</label>
+                    </div>
                     <div class="form-group">
                         <label>Do you have 2D creatives?</label>
                         <div class="radio-group">
@@ -806,7 +929,7 @@
                     <div class="image-upload-container">
                         <p class="image-upload-instructions">Upload logo and images of your preferred layouts or reference designs</p>
                         <label for="file-input" class="upload-btn">Choose Files</label>
-                        <input type="file" id="file-input" accept="image/*" multiple>
+                        <input type="file" id="file-input" accept="image/*, .pdf, .doc, .docx, .psd, .ai, .eps, .svg, .ppt, .pptx, .xls, .xlsx" multiple>
                         <div class="preview-container" id="preview-container"></div>
                     </div>
                 </div>
@@ -837,11 +960,6 @@
                     <div class="form-group">
                         <label for="website-url">Website URL</label>
                         <input type="url" id="website-url" class="form-control" placeholder="https://yourwebsite.com">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="client-notes">Special Requirements</label>
-                        <textarea id="client-notes" class="form-control" placeholder="Enter any special requirements or additional elements you'd like included..."></textarea>
                     </div>
                 </div>
                 
@@ -889,7 +1007,6 @@
         </div>
     </div>
 
-    <!-- Social Media Follow Modal -->
     <div class="modal" id="social-modal">
         <div class="modal-content">
             <h2>Follow Us on Social Media</h2>
@@ -899,7 +1016,7 @@
                 <a href="https://www.instagram.com/pixieexperience/" target="_blank" class="social-link">
                     <i class="fab fa-instagram" style="color: #E1306C;"></i> @pixieexperience
                 </a>
-                <a href="https://www.facebook.com/PixieExperience/" target="_blank" class="social-link">
+                <a href="https://www.facebook.com/PixieExperience" target="_blank" class="social-link">
                     <i class="fab fa-facebook" style="color: #1877F2;"></i> /PixieExperience
                 </a>
                 <a href="https://youtube.com/@pixieexperiencellp7326?si=2uuqyeBpY9idz47D" target="_blank" class="social-link">
@@ -914,6 +1031,26 @@
         </div>
     </div>
 
+    <div class="modal" id="additional-requirements-modal">
+        <div class="modal-content">
+            <button class="modal-close-button" id="additional-requirements-modal-close-btn">×</button>
+            <h2>Additional Requirements</h2>
+            <div class="form-group">
+                <label for="additional-notes">Please specify your additional requirements:</label>
+                <textarea id="additional-notes" class="form-control" placeholder="Enter details here..."></textarea>
+            </div>
+            <button class="modal-btn" id="additional-requirements-save-btn">Save</button>
+        </div>
+    </div>
+
+    <div class="modal" id="stall-type-info-modal">
+        <div class="modal-content">
+            <button class="modal-close-button" id="stall-type-info-modal-close-btn">×</button>
+            <h2 id="stall-type-info-modal-title"></h2>
+            <img id="stall-type-info-modal-image" src="" alt="Stall Type Example" style="max-width: 100%; height: auto; margin-top: 15px;">
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Configuration
@@ -924,11 +1061,15 @@
                 },
                 stall: {
                     width: 10,
-                    height: 10,
+                    depth: 10,
+                    height: 8,
+                    sqm: 100, // Manual SQM
                     faciaType: 'normal',
+                    stallType: 'octonorm',
                     budget: 'high',
                     has2DCreatives: false,
                     additionalRequirements: false,
+                    additionalNotes: '',
                     customTVSize: '',
                     items: {},
                     features: {
@@ -937,7 +1078,8 @@
                         wifi: false,
                         storage: false,
                         sound: false,
-                        meetingRoom: false
+                        meetingRoom: false,
+                        coffeeMachine: false
                     }
                 },
                 uploadedImages: []
@@ -949,10 +1091,11 @@
                 clientEmail: document.getElementById('client-email'),
                 clientPhone: document.getElementById('client-phone'),
                 clientCompany: document.getElementById('client-company'),
-                clientNotes: document.getElementById('client-notes'),
                 websiteUrl: document.getElementById('website-url'),
                 stallWidth: document.getElementById('stall-width'),
+                stallDepth: document.getElementById('stall-depth'),
                 stallHeight: document.getElementById('stall-height'),
+                stallSqmManual: document.getElementById('stall-sqm-manual'), // Manual SQM input
                 submitBtn: document.getElementById('submit-btn'),
                 resetBtn: document.getElementById('reset-btn'),
                 loadingIndicator: document.getElementById('loading-indicator'),
@@ -963,21 +1106,32 @@
                 previewContainer: document.getElementById('preview-container'),
                 faciaNormal: document.getElementById('facia-normal'),
                 faciaDesigner: document.getElementById('facia-designer'),
+                stallOctonorm: document.getElementById('stall-octonorm'),
+                stallCustomized: document.getElementById('stall-customized'),
                 budgetSelect: document.getElementById('budget'),
                 creativesYes: document.getElementById('creatives-yes'),
                 creativesNo: document.getElementById('creatives-no'),
                 additionalYes: document.getElementById('additional-yes'),
                 additionalNo: document.getElementById('additional-no'),
+                additionalRequirementsModal: document.getElementById('additional-requirements-modal'),
+                additionalNotes: document.getElementById('additional-notes'),
+                additionalRequirementsSaveBtn: document.getElementById('additional-requirements-save-btn'),
+                additionalRequirementsModalCloseBtn: document.getElementById('additional-requirements-modal-close-btn'),
                 customTVSize: document.getElementById('custom-tv-size'),
                 socialModal: document.getElementById('social-modal'),
                 modalCloseBtn: document.getElementById('modal-close-btn'),
-                // Additional features checkboxes
                 optionLighting: document.getElementById('option-lighting'),
                 optionPower: document.getElementById('option-power'),
                 optionWifi: document.getElementById('option-wifi'),
                 optionStorage: document.getElementById('option-storage'),
                 optionSound: document.getElementById('option-sound'),
-                optionMeeting: document.getElementById('option-meeting')
+                optionMeeting: document.getElementById('option-meeting'),
+                optionCoffeeMachine: document.getElementById('option-coffee-machine'),
+                stallTypeInfoIcons: document.querySelectorAll('.radio-option .info-icon'), // Info icons for stall types
+                stallTypeInfoModal: document.getElementById('stall-type-info-modal'),
+                stallTypeInfoModalTitle: document.getElementById('stall-type-info-modal-title'),
+                stallTypeInfoModalImage: document.getElementById('stall-type-info-modal-image'),
+                stallTypeInfoModalCloseBtn: document.getElementById('stall-type-info-modal-close-btn')
             };
 
             // Initialize the application
@@ -989,7 +1143,11 @@
             function setupEventListeners() {
                 // Stall dimensions
                 elements.stallWidth.addEventListener('change', updateStallDimensions);
+                elements.stallDepth.addEventListener('change', updateStallDimensions);
                 elements.stallHeight.addEventListener('change', updateStallDimensions);
+                elements.stallSqmManual.addEventListener('change', function() {
+                    config.stall.sqm = parseInt(this.value);
+                });
 
                 // Furniture options
                 document.querySelectorAll('.furniture-option').forEach(checkbox => {
@@ -1027,6 +1185,9 @@
                 elements.optionMeeting.addEventListener('change', function() {
                     config.stall.features.meetingRoom = this.checked;
                 });
+                elements.optionCoffeeMachine.addEventListener('change', function() {
+                    config.stall.features.coffeeMachine = this.checked;
+                });
 
                 // Facia type
                 elements.faciaNormal.addEventListener('change', function() {
@@ -1034,6 +1195,33 @@
                 });
                 elements.faciaDesigner.addEventListener('change', function() {
                     config.stall.faciaType = 'designer';
+                });
+
+                // Stall type
+                elements.stallOctonorm.addEventListener('change', function() {
+                    config.stall.stallType = 'octonorm';
+                });
+                elements.stallCustomized.addEventListener('change', function() {
+                    config.stall.stallType = 'customized';
+                });
+
+                // Stall type info icons
+                elements.stallTypeInfoIcons.forEach(icon => {
+                    icon.addEventListener('click', function(event) {
+                        event.preventDefault(); // Prevent radio button from changing
+                        const stallType = this.dataset.stallType;
+                        if (stallType === 'octonorm') {
+                            elements.stallTypeInfoModalTitle.textContent = 'Octonorm Stall';
+                            elements.stallTypeInfoModalImage.src = 'https://i.postimg.cc/3xN9s7tk/Octonorm-Stalls.jpg';
+                        } else if (stallType === 'customized') {
+                            elements.stallTypeInfoModalTitle.textContent = 'Customized Stall';
+                            elements.stallTypeInfoModalImage.src = 'https://i.postimg.cc/LXpt8M3B/STALL-1-Photo.jpg';
+                        }
+                        elements.stallTypeInfoModal.style.display = 'flex';
+                    });
+                });
+                elements.stallTypeInfoModalCloseBtn.addEventListener('click', () => {
+                    elements.stallTypeInfoModal.style.display = 'none';
                 });
 
                 // Budget
@@ -1052,9 +1240,24 @@
                 // Additional requirements
                 elements.additionalYes.addEventListener('change', function() {
                     config.stall.additionalRequirements = true;
+                    elements.additionalRequirementsModal.style.display = 'flex';
                 });
                 elements.additionalNo.addEventListener('change', function() {
                     config.stall.additionalRequirements = false;
+                    config.stall.additionalNotes = '';
+                });
+
+                elements.additionalRequirementsSaveBtn.addEventListener('click', function() {
+                    config.stall.additionalNotes = elements.additionalNotes.value;
+                    elements.additionalRequirementsModal.style.display = 'none';
+                });
+
+                elements.additionalRequirementsModalCloseBtn.addEventListener('click', function() {
+                    elements.additionalRequirementsModal.style.display = 'none';
+                    if (config.stall.additionalNotes === '') {
+                        elements.additionalNo.checked = true;
+                        config.stall.additionalRequirements = false;
+                    }
                 });
 
                 // Custom TV size
@@ -1077,9 +1280,10 @@
                 });
             }
 
-            // Update stall dimensions
+            // Update stall dimensions (only updates config, no SQM calculation)
             function updateStallDimensions() {
                 config.stall.width = parseInt(elements.stallWidth.value);
+                config.stall.depth = parseInt(elements.stallDepth.value);
                 config.stall.height = parseInt(elements.stallHeight.value);
             }
 
@@ -1123,16 +1327,15 @@
                 for (let i = 0; i < files.length; i++) {
                     const file = files[i];
                     
-                    if (!file.type.match('image.*')) {
-                        continue;
-                    }
+                    // Allow all file types as specified in the accept attribute
+                    // No need to check file.type.match('image.*') as we're accepting more
                     
                     const reader = new FileReader();
                     
                     reader.onload = function(event) {
-                        const imageData = event.target.result;
-                        config.uploadedImages.push(imageData);
-                        addImagePreview(imageData);
+                        const fileData = event.target.result;
+                        config.uploadedImages.push(fileData);
+                        addImagePreview(fileData, file.type); // Pass file type to addImagePreview
                     };
                     
                     reader.readAsDataURL(file);
@@ -1143,20 +1346,40 @@
             }
 
             // Add image preview
-            function addImagePreview(imageData) {
+            function addImagePreview(fileData, fileType) {
                 const previewDiv = document.createElement('div');
                 previewDiv.className = 'image-preview';
                 
-                const img = document.createElement('img');
-                img.src = imageData;
-                previewDiv.appendChild(img);
+                let content;
+                if (fileType.startsWith('image/')) {
+                    const img = document.createElement('img');
+                    img.src = fileData;
+                    content = img;
+                } else {
+                    // For non-image files, display a generic icon or text
+                    const fileIcon = document.createElement('i');
+                    fileIcon.classList.add('fas', 'fa-file'); // Default file icon
+                    if (fileType.includes('pdf')) fileIcon.classList.add('fa-file-pdf');
+                    else if (fileType.includes('word') || fileType.includes('document')) fileIcon.classList.add('fa-file-word');
+                    else if (fileType.includes('excel') || fileType.includes('spreadsheet')) fileIcon.classList.add('fa-file-excel');
+                    else if (fileType.includes('powerpoint') || fileType.includes('presentation')) fileIcon.classList.add('fa-file-powerpoint');
+                    else if (fileType.includes('photoshop') || fileType.includes('psd')) fileIcon.classList.add('fa-file-image'); // Using image icon for PSD
+                    else if (fileType.includes('illustrator') || fileType.includes('ai')) fileIcon.classList.add('fa-file-image'); // Using image icon for AI
+                    else if (fileType.includes('vector') || fileType.includes('eps') || fileType.includes('svg')) fileIcon.classList.add('fa-file-image'); // Using image icon for vector
+                    
+                    fileIcon.style.fontSize = '3em'; // Make icon larger
+                    fileIcon.style.color = 'var(--primary-color)';
+                    content = fileIcon;
+                }
+
+                previewDiv.appendChild(content);
                 
                 const removeBtn = document.createElement('div');
                 removeBtn.className = 'remove-image';
                 removeBtn.innerHTML = '×';
                 removeBtn.addEventListener('click', function() {
                     previewDiv.remove();
-                    const index = config.uploadedImages.indexOf(imageData);
+                    const index = config.uploadedImages.indexOf(fileData);
                     if (index !== -1) {
                         config.uploadedImages.splice(index, 1);
                     }
@@ -1171,10 +1394,13 @@
                 return {
                     stallDimensions: {
                         width: config.stall.width,
+                        depth: config.stall.depth,
                         height: config.stall.height,
-                        unit: 'feet'
+                        unit: 'feet',
+                        area: config.stall.sqm // Using manual SQM
                     },
                     stallConfiguration: {
+                        stallType: config.stall.stallType,
                         faciaType: config.stall.faciaType,
                         budget: config.stall.budget,
                         has2DCreatives: config.stall.has2DCreatives,
@@ -1200,6 +1426,7 @@
                         sofa2: config.stall.items['sofa-2']?.quantity || 0,
                         sofa3: config.stall.items['sofa-3']?.quantity || 0,
                         barTable: config.stall.items['bar-table']?.quantity || 0,
+                        barStool: config.stall.items['bar-stool']?.quantity || 0,
                         tPoy: config.stall.items['t-poy']?.quantity || 0
                     },
                     brandingElements: {
@@ -1213,16 +1440,17 @@
                         wifi: elements.optionWifi.checked,
                         storage: elements.optionStorage.checked,
                         sound: elements.optionSound.checked,
-                        meetingRoom: elements.optionMeeting.checked
+                        meetingRoom: elements.optionMeeting.checked,
+                        coffeeMachine: elements.optionCoffeeMachine.checked
                     },
                     clientInfo: {
                         name: elements.clientName.value,
                         email: elements.clientEmail.value,
-                        phone: elements.clientPhone.value || '',
-                        company: elements.clientCompany.value || '',
-                        website: elements.websiteUrl.value || ''
+                        phone: elements.clientPhone.value || 'Not provided',
+                        company: elements.clientCompany.value || 'Not provided',
+                        website: elements.websiteUrl.value || 'Not provided'
                     },
-                    notes: elements.clientNotes.value || '',
+                    notes: config.stall.additionalRequirements ? config.stall.additionalNotes : 'None provided',
                     uploadedImages: config.uploadedImages,
                     submittedAt: new Date().toISOString()
                 };
@@ -1250,12 +1478,33 @@
                     for (const imageData of designData.uploadedImages) {
                         const formData = new FormData();
                         formData.append('chat_id', config.telegram.chatId);
-                        formData.append('photo', dataURLtoBlob(imageData), 'layout.png');
                         
-                        await fetch(`https://api.telegram.org/bot${config.telegram.botToken}/sendPhoto`, {
-                            method: 'POST',
-                            body: formData
-                        });
+                        // Determine filename and content type from data URL for Telegram
+                        let filename = 'file';
+                        let blob;
+                        if (imageData.startsWith('data:image/')) {
+                            blob = dataURLtoBlob(imageData);
+                            filename = `image.${blob.type.split('/')[1]}`;
+                            formData.append('photo', blob, filename);
+                            await fetch(`https://api.telegram.org/bot${config.telegram.botToken}/sendPhoto`, {
+                                method: 'POST',
+                                body: formData
+                            });
+                        } else {
+                            // For other file types, Telegram might require sendDocument
+                            blob = dataURLtoBlob(imageData);
+                            // Attempt to infer filename from data URL or assign generic
+                            if (blob.type.includes('/')) {
+                                filename = `document.${blob.type.split('/')[1].split(';')[0]}`;
+                            } else {
+                                filename = 'document.bin'; // Fallback
+                            }
+                            formData.append('document', blob, filename);
+                            await fetch(`https://api.telegram.org/bot${config.telegram.botToken}/sendDocument`, {
+                                method: 'POST',
+                                body: formData
+                            });
+                        }
                     }
                     
                     return textResult;
@@ -1290,7 +1539,7 @@
                     designData.features.storage ? '✅ Storage Cabinets' : '❌ Storage Cabinets',
                     designData.features.sound ? '✅ Sound System' : '❌ Sound System',
                     designData.features.meetingRoom ? '✅ Meeting Room' : '❌ Meeting Room',
-                    designData.brandingElements.backlite > 0 ? '✅ Backlit Branding' : '❌ Backlit Branding'
+                    designData.features.coffeeMachine ? '✅ Coffee Machine' : '❌ Coffee Machine'
                 ].join('\n');
 
                 // Format TV options
@@ -1312,18 +1561,19 @@
                 // Format furniture
                 const furnitureList = [];
                 if (designData.furniture.chairs > 0) furnitureList.push(`• Chairs: ${designData.furniture.chairs}`);
-                if (designData.furniture.tables > 0) furnitureList.push(`• Tables: ${designData.furniture.tables}`);
-                if (designData.furniture.counters > 0) furnitureList.push(`• Counters: ${designData.furniture.counters}`);
+                if (designData.furniture.tables > 0) furnitureList.push(`• Round Tables: ${designData.furniture.tables}`);
+                if (designData.furniture.counters > 0) furnitureList.push(`• Reception Counters: ${designData.furniture.counters}`);
                 if (designData.furniture.sofa1 > 0) furnitureList.push(`• 1-Seater Sofas: ${designData.furniture.sofa1}`);
                 if (designData.furniture.sofa2 > 0) furnitureList.push(`• 2-Seater Sofas: ${designData.furniture.sofa2}`);
                 if (designData.furniture.sofa3 > 0) furnitureList.push(`• 3-Seater Sofas: ${designData.furniture.sofa3}`);
                 if (designData.furniture.barTable > 0) furnitureList.push(`• Bar Tables: ${designData.furniture.barTable}`);
+                if (designData.furniture.barStool > 0) furnitureList.push(`• Bar Stools: ${designData.furniture.barStool}`);
                 if (designData.furniture.tPoy > 0) furnitureList.push(`• T-Poys: ${designData.furniture.tPoy}`);
                 const furnitureDisplay = furnitureList.length > 0 ? furnitureList.join('\n') : 'None selected';
 
                 // Format branding elements
                 const brandingList = [];
-                if (designData.brandingElements.shelves > 0) brandingList.push(`• Shelves: ${designData.brandingElements.shelves}`);
+                if (designData.brandingElements.shelves > 0) brandingList.push(`• Display Shelves: ${designData.brandingElements.shelves}`);
                 if (designData.brandingElements.brochureStands > 0) brandingList.push(`• Brochure Stands: ${designData.brandingElements.brochureStands}`);
                 if (designData.brandingElements.backlite > 0) brandingList.push(`• Backlit Branding: ${designData.brandingElements.backlite}`);
                 const brandingDisplay = brandingList.length > 0 ? brandingList.join('\n') : 'None selected';
@@ -1340,17 +1590,18 @@
 --------------------------------
 *Client Information*
 👤 Name: ${designData.clientInfo.name}
-🏢 Company: ${designData.clientInfo.company || 'Not provided'}
+🏢 Company: ${designData.clientInfo.company}
 📧 Email: ${designData.clientInfo.email}
-📞 Phone: ${designData.clientInfo.phone || 'Not provided'}
-🌐 Website: ${designData.clientInfo.website || 'Not provided'}
+📞 Phone: ${designData.clientInfo.phone}
+🌐 Website: ${designData.clientInfo.website}
 
 *Stall Specifications*
-📏 Size: ${designData.stallDimensions.width} × ${designData.stallDimensions.height} ft
-🎨 Facia Type: ${designData.stallConfiguration.faciaType === 'normal' ? 'Normal' : 'Designer'}
+📏 Size: ${designData.stallDimensions.width} (Width) × ${designData.stallDimensions.depth} (Depth) × ${designData.stallDimensions.height} (Height) ft
+📐 Area: ${designData.stallDimensions.area} sq ft
+🏗️ Stall Type: ${designData.stallConfiguration.stallType === 'octonorm' ? 'Octonorm Stall' : 'Customized Stall'}
+🎨 Facia Type: ${designData.stallConfiguration.faciaType === 'normal' ? 'Normal Facia' : 'Designer Facia'}
 💰 Budget: ${budgetMap[designData.stallConfiguration.budget]}
 🎨 2D Creatives: ${designData.stallConfiguration.has2DCreatives ? 'Yes' : 'No'}
-➕ Additional Requirements: ${designData.stallConfiguration.additionalRequirements ? 'Yes' : 'No'}
 
 *TV Displays*
 ${tvDisplay}
@@ -1358,14 +1609,14 @@ ${tvDisplay}
 *Furniture*
 ${furnitureDisplay}
 
-*Branding Elements*
+*Display & Branding*
 ${brandingDisplay}
 
 *Additional Features*
 ${featuresList}
 
-*Special Requests*
-${designData.notes || 'None provided'}
+*Special Requirements*
+${designData.notes}
 
 *Submitted At*
 🕒 ${new Date(designData.submittedAt).toLocaleString()}
@@ -1440,10 +1691,12 @@ ${designData.notes || 'None provided'}
                 elements.clientPhone.value = '';
                 elements.clientCompany.value = '';
                 elements.websiteUrl.value = '';
-                elements.clientNotes.value = '';
+                elements.additionalNotes.value = '';
                 elements.customTVSize.value = '';
                 elements.stallWidth.value = '10';
-                elements.stallHeight.value = '10';
+                elements.stallDepth.value = '10';
+                elements.stallHeight.value = '8';
+                elements.stallSqmManual.value = '100'; // Reset manual SQM
                 
                 // Reset checkboxes
                 document.querySelectorAll('.furniture-option').forEach(checkbox => {
@@ -1452,13 +1705,17 @@ ${designData.notes || 'None provided'}
                 
                 // Reset quantities
                 document.querySelectorAll('.quantity-control span').forEach(span => {
-                    if (span.textContent !== '1') {
+                    const parentDataFor = span.closest('.quantity-control').dataset.for;
+                    if (parentDataFor === 'option-chair') {
+                        span.textContent = '2';
+                    } else {
                         span.textContent = '1';
                     }
                 });
                 
                 // Reset radio buttons
                 elements.faciaNormal.checked = true;
+                elements.stallOctonorm.checked = true;
                 elements.creativesNo.checked = true;
                 elements.additionalNo.checked = true;
                 elements.budgetSelect.value = 'high';
@@ -1470,15 +1727,20 @@ ${designData.notes || 'None provided'}
                 elements.optionStorage.checked = false;
                 elements.optionSound.checked = false;
                 elements.optionMeeting.checked = false;
+                elements.optionCoffeeMachine.checked = false;
                 
-                // Reset layout
+                // Reset config state
                 config.stall.items = {};
                 config.stall.width = 10;
-                config.stall.height = 10;
+                config.stall.depth = 10;
+                config.stall.height = 8;
+                config.stall.sqm = 100;
                 config.stall.faciaType = 'normal';
+                config.stall.stallType = 'octonorm';
                 config.stall.budget = 'high';
                 config.stall.has2DCreatives = false;
                 config.stall.additionalRequirements = false;
+                config.stall.additionalNotes = '';
                 config.stall.customTVSize = '';
                 
                 // Reset features
@@ -1488,7 +1750,8 @@ ${designData.notes || 'None provided'}
                     wifi: false,
                     storage: false,
                     sound: false,
-                    meetingRoom: false
+                    meetingRoom: false,
+                    coffeeMachine: false
                 };
                 
                 // Reset images
