@@ -102,8 +102,11 @@
             font-size: 1.5rem;
         }
         
-        .option-item {
+        .option-item-wrapper {
             margin-bottom: 12px;
+        }
+
+        .option-item {
             display: flex;
             align-items: center;
             padding: 8px 12px;
@@ -153,6 +156,27 @@
             font-weight: 600;
         }
         
+        .table-material-options {
+            margin-top: 10px;
+            margin-left: 45px; /* Aligns under the label */
+            padding: 10px 15px;
+            background-color: #f7fafc;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .table-material-options .material-label {
+            font-weight: 500;
+            color: #4a5568;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .table-material-options .radio-group {
+            margin-top: 0;
+            gap: 20px;
+        }
+
         .client-info {
             margin-top: 20px;
         }
@@ -800,85 +824,151 @@
                 
                 <div class="option-group">
                     <h3>Furniture</h3>
-                    <div class="option-item">
-                        <input type="checkbox" id="option-chair" class="furniture-option" data-type="chair" data-width="30" data-height="30">
-                        <label for="option-chair">Chairs</label>
-                        <div class="quantity-control" data-for="option-chair">
-                            <button class="quantity-minus">-</button>
-                            <span>2</span>
-                            <button class="quantity-plus">+</button>
+                    <div class="option-item-wrapper">
+                        <div class="option-item">
+                            <input type="checkbox" id="option-chair" class="furniture-option" data-type="chair" data-width="30" data-height="30">
+                            <label for="option-chair">Chairs</label>
+                            <div class="quantity-control" data-for="option-chair">
+                                <button class="quantity-minus">-</button>
+                                <span>2</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="option-table" class="furniture-option" data-type="table" data-width="60" data-height="60">
-                        <label for="option-table">Round Tables</label>
-                        <div class="quantity-control" data-for="option-table">
-                            <button class="quantity-minus">-</button>
-                            <span>1</span>
-                            <button class="quantity-plus">+</button>
+
+                    <div class="option-item-wrapper">
+                        <div class="option-item">
+                            <input type="checkbox" id="option-table" class="furniture-option table-checkbox" data-type="table" data-width="60" data-height="60" data-options-id="round-table-options">
+                            <label for="option-table">Round Tables</label>
+                            <div class="quantity-control" data-for="option-table">
+                                <button class="quantity-minus">-</button>
+                                <span>1</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
+                        </div>
+                        <div id="round-table-options" class="table-material-options hidden">
+                            <label class="material-label">Material:</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="round-glass" name="round-table-material" value="Glass" checked>
+                                    <label for="round-glass">Glass</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="round-wood" name="round-table-material" value="Wood">
+                                    <label for="round-wood">Wood</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="round-plastic" name="round-table-material" value="Plastic">
+                                    <label for="round-plastic">Plastic</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="option-counter" class="furniture-option" data-type="counter" data-width="100" data-height="40">
-                        <label for="option-counter">Reception Counter</label>
-                        <div class="quantity-control" data-for="option-counter">
-                            <button class="quantity-minus">-</button>
-                            <span>1</span>
-                            <button class="quantity-plus">+</button>
+
+                    <div class="option-item-wrapper">
+                        <div class="option-item">
+                            <input type="checkbox" id="option-rectangle-table" class="furniture-option table-checkbox" data-type="rectangle-table" data-width="120" data-height="60" data-options-id="rectangle-table-options">
+                            <label for="option-rectangle-table">Rectangle Tables</label>
+                            <div class="quantity-control" data-for="option-rectangle-table">
+                                <button class="quantity-minus">-</button>
+                                <span>1</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
+                        </div>
+                        <div id="rectangle-table-options" class="table-material-options hidden">
+                            <label class="material-label">Material:</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="rect-glass" name="rect-table-material" value="Glass" checked>
+                                    <label for="rect-glass">Glass</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="rect-wood" name="rect-table-material" value="Wood">
+                                    <label for="rect-wood">Wood</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="rect-plastic" name="rect-table-material" value="Plastic">
+                                    <label for="rect-plastic">Plastic</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="option-sofa-1" class="furniture-option" data-type="sofa-1" data-width="80" data-height="50">
-                        <label for="option-sofa-1">1-Seater Sofa</label>
-                        <div class="quantity-control" data-for="option-sofa-1">
-                            <button class="quantity-minus">-</button>
-                            <span>1</span>
-                            <button class="quantity-plus">+</button>
+
+                    <div class="option-item-wrapper">
+                        <div class="option-item">
+                            <input type="checkbox" id="option-counter" class="furniture-option" data-type="counter" data-width="100" data-height="40">
+                            <label for="option-counter">Reception Counter</label>
+                            <div class="quantity-control" data-for="option-counter">
+                                <button class="quantity-minus">-</button>
+                                <span>1</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="option-sofa-2" class="furniture-option" data-type="sofa-2" data-width="120" data-height="60">
-                        <label for="option-sofa-2">2-Seater Sofa</label>
-                        <div class="quantity-control" data-for="option-sofa-2">
-                            <button class="quantity-minus">-</button>
-                            <span>1</span>
-                            <button class="quantity-plus">+</button>
+                    <div class="option-item-wrapper">
+                        <div class="option-item">
+                            <input type="checkbox" id="option-sofa-1" class="furniture-option" data-type="sofa-1" data-width="80" data-height="50">
+                            <label for="option-sofa-1">1-Seater Sofa</label>
+                            <div class="quantity-control" data-for="option-sofa-1">
+                                <button class="quantity-minus">-</button>
+                                <span>1</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="option-sofa-3" class="furniture-option" data-type="sofa-3" data-width="180" data-height="70">
-                        <label for="option-sofa-3">3-Seater Sofa</label>
-                        <div class="quantity-control" data-for="option-sofa-3">
-                            <button class="quantity-minus">-</button>
-                            <span>1</span>
-                            <button class="quantity-plus">+</button>
+                    <div class="option-item-wrapper">
+                        <div class="option-item">
+                            <input type="checkbox" id="option-sofa-2" class="furniture-option" data-type="sofa-2" data-width="120" data-height="60">
+                            <label for="option-sofa-2">2-Seater Sofa</label>
+                            <div class="quantity-control" data-for="option-sofa-2">
+                                <button class="quantity-minus">-</button>
+                                <span>1</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="option-bar-table" class="furniture-option" data-type="bar-table" data-width="150" data-height="50">
-                        <label for="option-bar-table">Bar Table</label>
-                        <div class="quantity-control" data-for="option-bar-table">
-                            <button class="quantity-minus">-</button>
-                            <span>1</span>
-                            <button class="quantity-plus">+</button>
+                    <div class="option-item-wrapper">
+                        <div class="option-item">
+                            <input type="checkbox" id="option-sofa-3" class="furniture-option" data-type="sofa-3" data-width="180" data-height="70">
+                            <label for="option-sofa-3">3-Seater Sofa</label>
+                            <div class="quantity-control" data-for="option-sofa-3">
+                                <button class="quantity-minus">-</button>
+                                <span>1</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
                         </div>
                     </div>
-                     <div class="option-item">
-                        <input type="checkbox" id="option-bar-stool" class="furniture-option" data-type="bar-stool" data-width="30" data-height="30">
-                        <label for="option-bar-stool">Bar Stools</label>
-                        <div class="quantity-control" data-for="option-bar-stool">
-                            <button class="quantity-minus">-</button>
-                            <span>1</span>
-                            <button class="quantity-plus">+</button>
+                    <div class="option-item-wrapper">
+                        <div class="option-item">
+                            <input type="checkbox" id="option-bar-table" class="furniture-option" data-type="bar-table" data-width="150" data-height="50">
+                            <label for="option-bar-table">Bar Table</label>
+                            <div class="quantity-control" data-for="option-bar-table">
+                                <button class="quantity-minus">-</button>
+                                <span>1</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="option-t-poy" class="furniture-option" data-type="t-poy" data-width="40" data-height="40">
-                        <label for="option-t-poy">T-Poy</label>
-                        <div class="quantity-control" data-for="option-t-poy">
-                            <button class="quantity-minus">-</button>
-                            <span>1</span>
-                            <button class="quantity-plus">+</button>
+                     <div class="option-item-wrapper">
+                        <div class="option-item">
+                            <input type="checkbox" id="option-bar-stool" class="furniture-option" data-type="bar-stool" data-width="30" data-height="30">
+                            <label for="option-bar-stool">Bar Stools</label>
+                            <div class="quantity-control" data-for="option-bar-stool">
+                                <button class="quantity-minus">-</button>
+                                <span>1</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="option-item-wrapper">
+                        <div class="option-item">
+                            <input type="checkbox" id="option-t-poy" class="furniture-option" data-type="t-poy" data-width="40" data-height="40">
+                            <label for="option-t-poy">T-Poy</label>
+                            <div class="quantity-control" data-for="option-t-poy">
+                                <button class="quantity-minus">-</button>
+                                <span>1</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1223,16 +1313,33 @@
                     checkbox.addEventListener('change', handleFurnitureChange);
                 });
 
+                // Conditional table options
+                document.querySelectorAll('.table-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const optionsId = this.dataset.optionsId;
+                        const optionsDiv = document.getElementById(optionsId);
+                        optionsDiv.classList.toggle('hidden', !this.checked);
+                    });
+                });
+
+                // Listen to changes on material radio buttons
+                document.querySelectorAll('input[name="round-table-material"]').forEach(radio => {
+                    radio.addEventListener('change', () => updateTableMaterial('table', radio.value));
+                });
+                document.querySelectorAll('input[name="rect-table-material"]').forEach(radio => {
+                    radio.addEventListener('change', () => updateTableMaterial('rectangle-table', radio.value));
+                });
+
+
                 // Quantity controls
                 document.querySelectorAll('.quantity-control').forEach(control => {
                     const minusBtn = control.querySelector('.quantity-minus');
                     const plusBtn = control.querySelector('.quantity-plus');
-                    const quantitySpan = control.querySelector('span');
-                    const type = control.dataset.for.replace('option-', '');
-                    const checkbox = document.getElementById(`option-${type}`);
+                    const checkboxId = control.dataset.for;
+                    const checkbox = document.getElementById(checkboxId);
 
-                    minusBtn.addEventListener('click', () => adjustQuantity(type, -1, checkbox));
-                    plusBtn.addEventListener('click', () => adjustQuantity(type, 1, checkbox));
+                    minusBtn.addEventListener('click', () => adjustQuantity(checkbox, -1));
+                    plusBtn.addEventListener('click', () => adjustQuantity(checkbox, 1));
                 });
 
                 // Additional features checkboxes
@@ -1318,6 +1425,12 @@
                     elements.socialModal.style.display = 'none';
                 });
             }
+            
+            function updateTableMaterial(itemType, material) {
+                if (config.stall.items[itemType]) {
+                    config.stall.items[itemType].material = material;
+                }
+            }
 
             function handleUnitPreferenceChange() {
                 config.stall.unitPreference = document.querySelector('input[name="unit-preference"]:checked').value;
@@ -1365,29 +1478,37 @@
 
             function handleFurnitureChange() {
                 const type = this.dataset.type;
-                const quantityControl = document.querySelector(`.quantity-control[data-for="option-${type}"]`);
+                const quantityControl = document.querySelector(`.quantity-control[data-for="${this.id}"]`);
                 
                 if (this.checked) {
                     const quantity = parseInt(quantityControl.querySelector('span').textContent);
-                    config.stall.items[type] = {
+                    const itemData = {
                         quantity: quantity,
                         width: parseInt(this.dataset.width),
                         height: parseInt(this.dataset.height)
                     };
+                    // For tables, add the default material
+                    if (this.classList.contains('table-checkbox')) {
+                        const optionsId = this.dataset.optionsId;
+                        itemData.material = document.querySelector(`#${optionsId} input[type="radio"]:checked`).value;
+                    }
+                    config.stall.items[type] = itemData;
                 } else {
                     delete config.stall.items[type];
                 }
             }
 
-            function adjustQuantity(type, change, checkbox) {
-                const quantityControl = document.querySelector(`.quantity-control[data-for="option-${type}"]`);
-                let quantity = parseInt(quantityControl.querySelector('span').textContent);
+            function adjustQuantity(checkbox, change) {
+                const type = checkbox.dataset.type;
+                const quantityControl = document.querySelector(`.quantity-control[data-for="${checkbox.id}"]`);
+                let quantitySpan = quantityControl.querySelector('span');
+                let quantity = parseInt(quantitySpan.textContent);
                 
                 quantity += change;
                 if (quantity < 1) quantity = 1;
                 if (quantity > 30) quantity = 30;
                 
-                quantityControl.querySelector('span').textContent = quantity;
+                quantitySpan.textContent = quantity;
                 
                 if (checkbox.checked && config.stall.items[type]) {
                     config.stall.items[type].quantity = quantity;
@@ -1492,24 +1613,7 @@
                         additionalRequirements: config.stall.additionalRequirements,
                         customTVSize: config.stall.customTVSize
                     },
-                    tvOptions: {
-                        tv24: config.stall.items['tv-24']?.quantity || 0, tv32: config.stall.items['tv-32']?.quantity || 0,
-                        tv40: config.stall.items['tv-40']?.quantity || 0, tv43: config.stall.items['tv-43']?.quantity || 0,
-                        tv50: config.stall.items['tv-50']?.quantity || 0, tv55: config.stall.items['tv-55']?.quantity || 0,
-                        tv65: config.stall.items['tv-65']?.quantity || 0, tv75: config.stall.items['tv-75']?.quantity || 0,
-                        tv85: config.stall.items['tv-85']?.quantity || 0
-                    },
-                    furniture: {
-                        chairs: config.stall.items['chair']?.quantity || 0, tables: config.stall.items['table']?.quantity || 0,
-                        counters: config.stall.items['counter']?.quantity || 0, sofa1: config.stall.items['sofa-1']?.quantity || 0,
-                        sofa2: config.stall.items['sofa-2']?.quantity || 0, sofa3: config.stall.items['sofa-3']?.quantity || 0,
-                        barTable: config.stall.items['bar-table']?.quantity || 0, barStool: config.stall.items['bar-stool']?.quantity || 0,
-                        tPoy: config.stall.items['t-poy']?.quantity || 0
-                    },
-                    brandingElements: {
-                        shelves: config.stall.items['shelves']?.quantity || 0, brochureStands: config.stall.items['brochure-stand']?.quantity || 0,
-                        backlite: config.stall.items['backlite']?.quantity || 0
-                    },
+                    items: config.stall.items, // Send the whole items object
                     features: {
                         lighting: elements.optionLighting.checked, power: elements.optionPower.checked,
                         wifi: elements.optionWifi.checked, storage: elements.optionStorage.checked,
@@ -1546,23 +1650,25 @@
                         throw new Error(`Telegram send message failed: ${errorData.description || textResponse.statusText}`);
                     }
                     
-                    for (const fileObj of designData.uploadedFiles) {
-                        const formData = new FormData();
-                        formData.append('chat_id', config.telegram.chatId);
-                        const blob = dataURLtoBlob(fileObj.dataURL);
-                        
-                        if (fileObj.fileType.startsWith('image/')) {
-                            formData.append('photo', blob, fileObj.fileName);
-                            await fetch(`https://api.telegram.org/bot${config.telegram.botToken}/sendPhoto`, {
-                                method: 'POST',
-                                body: formData
-                            });
-                        } else {
-                            formData.append('document', blob, fileObj.fileName);
-                            await fetch(`https://api.telegram.org/bot${config.telegram.botToken}/sendDocument`, {
-                                method: 'POST',
-                                body: formData
-                            });
+                    if (designData.uploadedFiles.length > 0) {
+                        for (const fileObj of designData.uploadedFiles) {
+                            const formData = new FormData();
+                            formData.append('chat_id', config.telegram.chatId);
+                            const blob = dataURLtoBlob(fileObj.dataURL);
+                            
+                            if (fileObj.fileType.startsWith('image/')) {
+                                formData.append('photo', blob, fileObj.fileName);
+                                await fetch(`https://api.telegram.org/bot${config.telegram.botToken}/sendPhoto`, {
+                                    method: 'POST',
+                                    body: formData
+                                });
+                            } else {
+                                formData.append('document', blob, fileObj.fileName);
+                                await fetch(`https://api.telegram.org/bot${config.telegram.botToken}/sendDocument`, {
+                                    method: 'POST',
+                                    body: formData
+                                });
+                            }
                         }
                     }
                     
@@ -1588,48 +1694,48 @@
             }
 
             function formatTelegramMessage(designData) {
-                const featuresList = [
-                    designData.features.lighting ? '✅ Spot Lighting' : '❌ Spot Lighting',
-                    designData.features.power ? '✅ Power Outlets' : '❌ Power Outlets',
-                    designData.features.wifi ? '✅ WiFi Hotspot' : '❌ WiFi Hotspot',
-                    designData.features.storage ? '✅ Storage Cabinets' : '❌ Storage Cabinets',
-                    designData.features.sound ? '✅ Sound System' : '❌ Sound System',
-                    designData.features.meetingRoom ? '✅ Meeting Room' : '❌ Meeting Room',
-                    designData.features.coffeeMachine ? '✅ Coffee Machine' : '❌ Coffee Machine'
-                ].map(item => `  ${item}`).join('\n');
+                const items = designData.items;
 
-                const tvOptions = [];
-                if (designData.tvOptions.tv24 > 0) tvOptions.push(`• 24": ${designData.tvOptions.tv24}`);
-                if (designData.tvOptions.tv32 > 0) tvOptions.push(`• 32": ${designData.tvOptions.tv32}`);
-                if (designData.tvOptions.tv40 > 0) tvOptions.push(`• 40": ${designData.tvOptions.tv40}`);
-                if (designData.tvOptions.tv43 > 0) tvOptions.push(`• 43": ${designData.tvOptions.tv43}`);
-                if (designData.tvOptions.tv50 > 0) tvOptions.push(`• 50": ${designData.tvOptions.tv50}`);
-                if (designData.tvOptions.tv55 > 0) tvOptions.push(`• 55": ${designData.tvOptions.tv55}`);
-                if (designData.tvOptions.tv65 > 0) tvOptions.push(`• 65": ${designData.tvOptions.tv65}`);
-                if (designData.tvOptions.tv75 > 0) tvOptions.push(`• 75": ${designData.tvOptions.tv75}`);
-                if (designData.tvOptions.tv85 > 0) tvOptions.push(`• 85": ${designData.tvOptions.tv85}`);
-                if (designData.stallConfiguration.customTVSize) {
-                    tvOptions.push(`• Custom: ${designData.stallConfiguration.customTVSize}`);
-                }
-                const tvDisplay = tvOptions.length > 0 ? '\n' + tvOptions.map(item => `  ${item}`).join('\n') : '  None selected';
+                const tvList = [
+                    items['tv-24'] ? `• 24": ${items['tv-24'].quantity}` : null,
+                    items['tv-32'] ? `• 32": ${items['tv-32'].quantity}` : null,
+                    items['tv-40'] ? `• 40": ${items['tv-40'].quantity}` : null,
+                    items['tv-43'] ? `• 43": ${items['tv-43'].quantity}` : null,
+                    items['tv-50'] ? `• 50": ${items['tv-50'].quantity}` : null,
+                    items['tv-55'] ? `• 55": ${items['tv-55'].quantity}` : null,
+                    items['tv-65'] ? `• 65": ${items['tv-65'].quantity}` : null,
+                    items['tv-75'] ? `• 75": ${items['tv-75'].quantity}` : null,
+                    items['tv-85'] ? `• 85": ${items['tv-85'].quantity}` : null,
+                    designData.stallConfiguration.customTVSize ? `• Custom: ${designData.stallConfiguration.customTVSize}` : null
+                ].filter(Boolean);
+                const tvDisplay = tvList.length > 0 ? '\n' + tvList.map(item => `  ${item}`).join('\n') : '  None selected';
 
-                const furnitureList = [];
-                if (designData.furniture.chairs > 0) furnitureList.push(`• Chairs: ${designData.furniture.chairs}`);
-                if (designData.furniture.tables > 0) furnitureList.push(`• Round Tables: ${designData.furniture.tables}`);
-                if (designData.furniture.counters > 0) furnitureList.push(`• Reception Counters: ${designData.furniture.counters}`);
-                if (designData.furniture.sofa1 > 0) furnitureList.push(`• 1-Seater Sofas: ${designData.furniture.sofa1}`);
-                if (designData.furniture.sofa2 > 0) furnitureList.push(`• 2-Seater Sofas: ${designData.furniture.sofa2}`);
-                if (designData.furniture.sofa3 > 0) furnitureList.push(`• 3-Seater Sofas: ${designData.furniture.sofa3}`);
-                if (designData.furniture.barTable > 0) furnitureList.push(`• Bar Tables: ${designData.furniture.barTable}`);
-                if (designData.furniture.barStool > 0) furnitureList.push(`• Bar Stools: ${designData.furniture.barStool}`);
-                if (designData.furniture.tPoy > 0) furnitureList.push(`• T-Poys: ${designData.furniture.tPoy}`);
+
+                const furnitureList = [
+                    items['chair'] ? `• Chairs: ${items['chair'].quantity}` : null,
+                    items['table'] ? `• Round Tables: ${items['table'].quantity} (${items['table'].material})` : null,
+                    items['rectangle-table'] ? `• Rectangle Tables: ${items['rectangle-table'].quantity} (${items['rectangle-table'].material})` : null,
+                    items['counter'] ? `• Reception Counters: ${items['counter'].quantity}` : null,
+                    items['sofa-1'] ? `• 1-Seater Sofas: ${items['sofa-1'].quantity}` : null,
+                    items['sofa-2'] ? `• 2-Seater Sofas: ${items['sofa-2'].quantity}` : null,
+                    items['sofa-3'] ? `• 3-Seater Sofas: ${items['sofa-3'].quantity}` : null,
+                    items['bar-table'] ? `• Bar Tables: ${items['bar-table'].quantity}` : null,
+                    items['bar-stool'] ? `• Bar Stools: ${items['bar-stool'].quantity}` : null,
+                    items['t-poy'] ? `• T-Poys: ${items['t-poy'].quantity}` : null
+                ].filter(Boolean);
                 const furnitureDisplay = furnitureList.length > 0 ? '\n' + furnitureList.map(item => `  ${item}`).join('\n') : '  None selected';
-
-                const brandingList = [];
-                if (designData.brandingElements.shelves > 0) brandingList.push(`• Display Shelves: ${designData.brandingElements.shelves}`);
-                if (designData.brandingElements.brochureStands > 0) brandingList.push(`• Brochure Stands: ${designData.brandingElements.brochureStands}`);
-                if (designData.brandingElements.backlite > 0) brandingList.push(`• Backlit Branding: ${designData.brandingElements.backlite}`);
+                
+                const brandingList = [
+                    items['shelves'] ? `• Display Shelves: ${items['shelves'].quantity}` : null,
+                    items['brochure-stand'] ? `• Brochure Stands: ${items['brochure-stand'].quantity}` : null,
+                    items['backlite'] ? `• Backlit Branding: ${items['backlite'].quantity}` : null
+                ].filter(Boolean);
                 const brandingDisplay = brandingList.length > 0 ? '\n' + brandingList.map(item => `  ${item}`).join('\n') : '  None selected';
+                
+                const featuresList = Object.entries(designData.features).map(([key, value]) => {
+                    const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                    return `${value ? '✅' : '❌'} ${label}`;
+                }).map(item => `  ${item}`).join('\n');
 
                 const budgetMap = { 'low': 'Low Budget', 'mid': 'Medium Budget', 'high': 'High Budget' };
 
@@ -1669,14 +1775,11 @@ ${dimensionsString}
   • *Budget:* ${budgetMap[designData.stallConfiguration.budget]}
   • *2D Creatives:* ${designData.stallConfiguration.has2DCreatives ? 'Yes' : 'No'}
 
-*📺 TV Displays*
-${tvDisplay}
+*📺 TV Displays*${tvDisplay}
 
-*🛋️ Furniture*
-${furnitureDisplay}
+*🛋️ Furniture*${furnitureDisplay}
 
-*✨ Display & Branding*
-${brandingDisplay}
+*✨ Display & Branding*${brandingDisplay}
 
 *🔌 Additional Features*
 ${featuresList}
@@ -1714,7 +1817,7 @@ ${featuresList}
                     elements.successMessage.style.display = 'block';
                     elements.socialModal.style.display = 'flex';
                     
-                    resetForm();
+                    // Do not reset the form automatically, let the user decide.
                     
                     setTimeout(() => {
                         elements.successMessage.style.display = 'none';
@@ -1740,15 +1843,11 @@ ${featuresList}
 
             function resetForm() {
                 // Reset client info form fields
-                document.querySelector('.client-info').querySelector('form')?.reset();
                 elements.clientName.value = '';
                 elements.clientEmail.value = '';
                 elements.clientPhone.value = '';
                 elements.clientCompany.value = '';
                 elements.websiteUrl.value = '';
-
-                // Reset main configuration form
-                document.querySelector('.main-content').querySelector('form')?.reset();
 
                 // Manually reset values and config state
                 elements.additionalNotes.value = '';
@@ -1762,10 +1861,14 @@ ${featuresList}
                 elements.stallDepthSqm.value = '10';
 
                 elements.specifyHeightCheckbox.checked = false;
-                elements.stallHeight.value = '8';
                 
                 document.querySelectorAll('.furniture-option').forEach(checkbox => {
                     checkbox.checked = false;
+                });
+
+                document.querySelectorAll('.table-material-options').forEach(div => {
+                    div.classList.add('hidden');
+                    div.querySelector('input[type="radio"]').checked = true; // Reset to first option
                 });
                 
                 document.querySelectorAll('.quantity-control span').forEach(span => {
