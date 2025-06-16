@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exhibition Stall Configuration Tool</title>
+    <title>Exhibition Stall requirement form</title>
     <meta name="description" content="Configure your perfect exhibition stall with our customization options">
     <style>
         :root {
@@ -633,8 +633,8 @@
     <div class="container">
         <header>
             <img src="https://i.postimg.cc/BZkhJBsg/pixie-01.png" alt="Pixie Experience Logo" class="company-logo">
-            <h1>Exhibition Stall Configuration Tool</h1>
-            <p>Configure your perfect exhibition stall with our advanced customization options</p>
+            <h1>Exhibition Stall Requirement Form</h1>
+            <p>Create your perfect exhibition stall with our advanced customization options</p>
         </header>
         
         <div class="main-content">
@@ -1115,7 +1115,7 @@
                 
                 <div class="submit-section">
                     <button class="btn btn-secondary" id="reset-btn">Reset Form</button>
-                    <button class="btn btn-primary" id="submit-btn">Submit Configuration</button>
+                    <button class="btn btn-primary" id="submit-btn">Submit form</button>
                 </div>
             </div>
         </div>
@@ -1204,7 +1204,7 @@
             const config = {
                 telegram: {
                     botToken: '7287533431:AAG-YwrW3F5Tz_9Nti0sR_O8xbRZFeD84Qs',
-                    chatId: '8163461981'
+                    chatIds: ['7076125469', '8163461981']
                 },
                 stall: {
                     unitPreference: 'feet', // 'feet' or 'sqm'
@@ -1405,7 +1405,7 @@
                     }
                 });
 
-                // Custom TV size
+                // Custom LED size
                 elements.customLedSize.addEventListener('change', function() { config.stall.customLedSize = this.value; });
 
                 // File upload
@@ -1428,7 +1428,7 @@
                 } else {
                     const textArea = document.createElement('textarea');
                     textArea.value = phoneNumber;
-                    textArea.style.position = 'fixed'; // Prevent scrolling to bottom of page in MS Edge.
+                    textArea.style.position = 'fixed';
                     textArea.style.top = 0;
                     textArea.style.left = 0;
                     document.body.appendChild(textArea);
@@ -1658,23 +1658,41 @@
 
             async function sendTelegramNotification(designData) {
                 const message = formatTelegramMessage(designData);
-                const textResponse = await fetch(`https://api.telegram.org/bot${config.telegram.botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: config.telegram.chatId, text: message, parse_mode: 'Markdown' })
+                const notificationPromises = config.telegram.chatIds.map(chatId => {
+                    return fetch(`https://api.telegram.org/bot${config.telegram.botToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: 'Markdown' })
+                    }).then(response => {
+                        if (!response.ok) {
+                           return response.json().then(err => Promise.reject(err));
+                        }
+                        return response.json();
+                    }).then(() => {
+                        if (designData.uploadedFiles.length > 0) {
+                            const filePromises = designData.uploadedFiles.map(fileObj => {
+                                const formData = new FormData();
+                                formData.append('chat_id', chatId);
+                                const blob = dataURLtoBlob(fileObj.dataURL);
+                                const action = fileObj.fileType.startsWith('image/') ? 'sendPhoto' : 'sendDocument';
+                                const field = fileObj.fileType.startsWith('image/') ? 'photo' : 'document';
+                                formData.append(field, blob, fileObj.fileName);
+                                return fetch(`https://api.telegram.org/bot${config.telegram.botToken}/${action}`, { method: 'POST', body: formData });
+                            });
+                            return Promise.all(filePromises);
+                        }
+                    });
                 });
-                if (!textResponse.ok) {
-                    const errorData = await textResponse.json();
-                    throw new Error(`Telegram API Error: ${errorData.description || textResponse.statusText}`);
-                }
-                for (const fileObj of designData.uploadedFiles) {
-                    const formData = new FormData();
-                    formData.append('chat_id', config.telegram.chatId);
-                    const blob = dataURLtoBlob(fileObj.dataURL);
-                    const action = fileObj.fileType.startsWith('image/') ? 'sendPhoto' : 'sendDocument';
-                    const field = fileObj.fileType.startsWith('image/') ? 'photo' : 'document';
-                    formData.append(field, blob, fileObj.fileName);
-                    await fetch(`https://api.telegram.org/bot${config.telegram.botToken}/${action}`, { method: 'POST', body: formData });
+
+                const results = await Promise.allSettled(notificationPromises);
+                results.forEach((result, index) => {
+                    if (result.status === 'rejected') {
+                        console.error(`Failed to send notification to chat ID ${config.telegram.chatIds[index]}:`, result.reason);
+                    }
+                });
+
+                if (results.every(result => result.status === 'rejected')) {
+                     throw new Error('All Telegram notifications failed.');
                 }
             }
             
